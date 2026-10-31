@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyMate Lite — Assignment Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <span class="brand-icon" aria-hidden="true">📚</span>
+          <h1 class="brand-name">StudyMate <span class="brand-accent">Lite</span></h1>
+        </div>
+        <p class="brand-tagline">Your personal assignment tracker</p>
+      </div>
+    </header>
+
+    <main class="main-layout">
+
+      <!-- ===================== STATS BAR ===================== -->
+      <section class="stats-bar" aria-label="Assignment statistics">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-total">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat-card stat-card--active">
+          <span class="stat-value" id="stat-active">0</span>
+          <span class="stat-label">Active</span>
+        </div>
+        <div class="stat-card stat-card--completed">
+          <span class="stat-value" id="stat-completed">0</span>
+          <span class="stat-label">Completed</span>
+        </div>
+      </section>
+
+      <!-- ===================== ADD / EDIT FORM ===================== -->
+      <section class="form-section card" aria-label="Assignment form">
+        <h2 class="section-title" id="form-heading">Add New Assignment</h2>
+        <form id="assignment-form" novalidate>
+          <!-- Hidden field stores the ID when editing -->
+          <input type="hidden" id="edit-id" />
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="field-title">Assignment Title <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="field-title" placeholder="e.g. Essay on Climate Change"
+                     autocomplete="off" maxlength="120" />
+              <span class="field-error" id="err-title" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="field-course">Course / Subject <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="field-course" placeholder="e.g. Environmental Science"
+                     autocomplete="off" maxlength="80" />
+              <span class="field-error" id="err-course" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="field-due">Due Date <span class="required" aria-hidden="true">*</span></label>
+              <input type="date" id="field-due" />
+              <span class="field-error" id="err-due" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="field-priority">Priority <span class="required" aria-hidden="true">*</span></label>
+              <select id="field-priority">
+                <option value="">— Select priority —</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+              <span class="field-error" id="err-priority" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" id="btn-submit">Add Assignment</button>
+            <button type="button" class="btn btn--ghost" id="btn-cancel" hidden>Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ===================== FILTER TABS ===================== -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter assignments">
+        <button class="tab-btn tab-btn--active" role="tab" aria-selected="true"
+                data-filter="all" id="tab-all">All</button>
+        <button class="tab-btn" role="tab" aria-selected="false"
+                data-filter="active" id="tab-active">Active</button>
+        <button class="tab-btn" role="tab" aria-selected="false"
+                data-filter="completed" id="tab-completed">Completed</button>
+      </div>
+
+      <!-- ===================== SEARCH & SORT TOOLBAR ===================== -->
+      <div class="list-toolbar">
+        <div class="search-wrap">
+          <label for="search-input" class="sr-only">Search assignments</label>
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input type="search" id="search-input"
+                 placeholder="Search by title or course…"
+                 autocomplete="off" maxlength="120" />
+        </div>
+        <div class="sort-wrap">
+          <label for="sort-select" class="sr-only">Sort by deadline</label>
+          <select id="sort-select" aria-label="Sort assignments">
+            <option value="nearest">↑ Nearest Deadline</option>
+            <option value="farthest">↓ Farthest Deadline</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ===================== ASSIGNMENT LIST ===================== -->
+      <section aria-label="Assignment list">
+        <!-- Empty state shown when no assignments match the current filter -->
+        <div class="empty-state" id="empty-state" hidden>
+          <p class="empty-icon" aria-hidden="true">🗂️</p>
+          <p class="empty-message" id="empty-message">No assignments yet. Add one above!</p>
+        </div>
+
+        <ul class="assignment-list" id="assignment-list" aria-live="polite" aria-label="Assignments"></ul>
+      </section>
+
+    </main>
+
+    <!-- ===================== DELETE CONFIRMATION DIALOG ===================== -->
+    <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="dialog-title">
+      <h2 class="dialog-title" id="dialog-title">Delete Assignment?</h2>
+      <p class="dialog-body">This action cannot be undone.</p>
+      <div class="dialog-actions">
+        <button class="btn btn--danger" id="btn-confirm-delete">Delete</button>
+        <button class="btn btn--ghost" id="btn-cancel-delete">Cancel</button>
+      </div>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>

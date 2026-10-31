@@ -1,0 +1,724 @@
+/* ================================================================
+   StudyMate Lite — style.css
+   Design tokens, layout, components, and responsive rules.
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   1. DESIGN TOKENS (CSS Custom Properties)
+   ---------------------------------------------------------------- */
+:root {
+  /* Colours */
+  --color-primary:        #2563eb;
+  --color-primary-dark:   #1d4ed8;
+  --color-primary-light:  #eff6ff;
+  --color-accent:         #f97316;
+  --color-accent-light:   #fff7ed;
+
+  --color-success:        #16a34a;
+  --color-success-light:  #f0fdf4;
+  --color-danger:         #dc2626;
+  --color-danger-light:   #fef2f2;
+
+  --color-bg:             #f1f5f9;
+  --color-surface:        #ffffff;
+  --color-border:         #e2e8f0;
+  --color-border-hover:   #cbd5e1;
+
+  --color-text:           #1e293b;
+  --color-text-muted:     #64748b;
+  --color-text-light:     #94a3b8;
+
+  /* Priority badge colours */
+  --color-high:           #dc2626;
+  --color-high-bg:        #fef2f2;
+  --color-medium:         #d97706;
+  --color-medium-bg:      #fffbeb;
+  --color-low:            #16a34a;
+  --color-low-bg:         #f0fdf4;
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.10);
+
+  /* Typography */
+  --font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 0.9375rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.5rem;
+
+  /* Transitions */
+  --transition: 150ms ease;
+}
+
+/* ----------------------------------------------------------------
+   2. RESET & BASE
+   ---------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ----------------------------------------------------------------
+   3. HEADER
+   ---------------------------------------------------------------- */
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);  /* tighter top/bottom */
+}
+
+.header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+  gap: var(--space-3);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.brand-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: var(--font-size-lg);   /* smaller than before — less dominant */
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.brand-accent {
+  color: var(--color-primary);
+}
+
+.brand-tagline {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-left: 0;   /* now flows inline with flexbox */
+}
+
+/* ----------------------------------------------------------------
+   4. MAIN LAYOUT
+   ---------------------------------------------------------------- */
+.main-layout {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-6);  /* less top/bottom breathing room */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);   /* tighter gap between all sections */
+}
+
+/* Shared card */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4) var(--space-5);  /* reduced from space-5/space-6 */
+}
+
+/* ----------------------------------------------------------------
+   5. STATS BAR
+   ---------------------------------------------------------------- */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+/* Compact inline layout: number + label side by side */
+.stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card--active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.stat-card--completed {
+  border-color: var(--color-success);
+  background: var(--color-success-light);
+}
+
+.stat-value {
+  font-size: var(--font-size-lg);  /* was xl — smaller and denser */
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.stat-card--active   .stat-value { color: var(--color-primary); }
+.stat-card--completed .stat-value { color: var(--color-success); }
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+/* ----------------------------------------------------------------
+   6. FORM SECTION
+   ---------------------------------------------------------------- */
+.section-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3) var(--space-4);  /* was space-4/space-5 — tighter rows */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;  /* was space-1 — labels sit closer to inputs */
+}
+
+label {
+  font-size: var(--font-size-xs);     /* was sm — more compact */
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.required {
+  color: var(--color-danger);
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: var(--space-1) var(--space-3);  /* was space-2 top/bottom — shorter inputs */
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  height: 2rem;   /* was 2.375rem */
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+input.is-invalid,
+select.is-invalid {
+  border-color: var(--color-danger);
+}
+
+input.is-invalid:focus,
+select.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(220,38,38,.15);
+}
+
+.field-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  min-height: 0.875rem;  /* was 1rem — slightly shorter */
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);   /* was space-5 */
+  border-top: 1px solid var(--color-border);  /* visual separator between fields and actions */
+  padding-top: var(--space-3);
+}
+
+/* ----------------------------------------------------------------
+   7. BUTTONS
+   ---------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-4);   /* was space-2/space-5 — more compact */
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition), opacity var(--transition),
+              box-shadow var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--color-primary-dark);
+  box-shadow: 0 2px 8px rgba(37,99,235,.30);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.btn--danger:hover,
+.btn--danger:focus-visible {
+  background: #b91c1c;
+}
+
+.btn--icon {
+  padding: var(--space-1) var(--space-2);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+}
+
+.btn--icon:hover,
+.btn--icon:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-border-hover);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------
+   8. FILTER TABS
+   ---------------------------------------------------------------- */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  padding: var(--space-1) var(--space-4);   /* was space-2/space-5 — tighter */
+  font-size: var(--font-size-xs);            /* was sm — more compact */
+  font-family: var(--font-family);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab-btn:hover,
+.tab-btn:focus-visible {
+  color: var(--color-primary);
+}
+
+.tab-btn--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------
+   9. EMPTY STATE
+   ---------------------------------------------------------------- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);   /* was space-8 — less towering */
+  color: var(--color-text-muted);
+}
+
+.empty-icon {
+  font-size: 2rem;    /* was 2.5rem */
+  margin-bottom: var(--space-2);
+}
+
+.empty-message {
+  font-size: var(--font-size-xs);
+}
+
+/* ----------------------------------------------------------------
+   10. ASSIGNMENT LIST & CARDS
+   ---------------------------------------------------------------- */
+.assignment-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);     /* was space-3 — tighter card stacking */
+  padding-top: var(--space-3);  /* was space-4 */
+}
+
+.assignment-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);  /* was 4px — subtler accent stripe */
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);   /* was space-4/space-5 — denser cards */
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-3);
+  align-items: center;   /* was start — vertically centers actions with content */
+  transition: box-shadow var(--transition), opacity var(--transition);
+}
+
+.assignment-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-hover);
+}
+
+/* Completed cards are visually dimmed and left border changes to green */
+.assignment-card--completed {
+  border-left-color: var(--color-success);
+  opacity: 0.65;
+  background: #fafafa;
+}
+
+.assignment-card--completed .card-title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Left-border colour by priority (active cards only) */
+.assignment-card--high   { border-left-color: var(--color-high);   }
+.assignment-card--medium { border-left-color: var(--color-medium); }
+.assignment-card--low    { border-left-color: var(--color-low);    }
+
+.card-body {
+  min-width: 0;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: 2px;   /* was space-1 — title sits closer to meta */
+}
+
+.card-title {
+  font-size: var(--font-size-sm);    /* was base — tighter text hierarchy */
+  font-weight: 600;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+/* Priority badge */
+.badge {
+  display: inline-block;
+  padding: 1px var(--space-2);   /* was 2px — slimmer pill */
+  border-radius: var(--radius-sm);
+  font-size: 0.6875rem;           /* 11px — very compact */
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge--high   { background: var(--color-high-bg);   color: var(--color-high);   }
+.badge--medium { background: var(--color-medium-bg); color: var(--color-medium); }
+.badge--low    { background: var(--color-low-bg);    color: var(--color-low);    }
+
+/* Status badge */
+.badge--status-active    { background: var(--color-primary-light); color: var(--color-primary); }
+.badge--status-completed { background: var(--color-success-light); color: var(--color-success); }
+
+.card-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: 2px;    /* was space-2 */
+}
+
+.card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Overdue due date */
+.due-overdue {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* Card actions — horizontal row at all widths above mobile */
+.card-actions {
+  display: flex;
+  flex-direction: row;    /* was column — all three buttons side by side */
+  gap: var(--space-1);
+  align-items: center;
+}
+
+/* ----------------------------------------------------------------
+   11. CONFIRMATION DIALOG
+   ---------------------------------------------------------------- */
+.confirm-dialog {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+  max-width: 340px;
+  width: calc(100% - var(--space-8));
+  font-family: var(--font-family);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(0,0,0,0.35);
+}
+
+.dialog-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.dialog-body {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ----------------------------------------------------------------
+   11b. SEARCH & SORT TOOLBAR
+   ---------------------------------------------------------------- */
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Toolbar sits between filter tabs and the list */
+.list-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Search field wrapper — icon overlaid on the left */
+.search-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-3);
+  font-size: var(--font-size-xs);
+  pointer-events: none;
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+
+.search-wrap input[type="search"] {
+  width: 100%;
+  height: 2rem;
+  padding: var(--space-1) var(--space-3) var(--space-1) calc(var(--space-3) + 1.25rem);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  /* Remove browser default clear button on webkit for consistency */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-wrap input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+  appearance: auto;  /* keep the native × button */
+}
+
+.search-wrap input[type="search"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Sort select — fixed width, matches input height */
+.sort-wrap select {
+  height: 2rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.sort-wrap select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+  color: var(--color-text);
+}
+
+/* ----------------------------------------------------------------
+   12. RESPONSIVE — MOBILE
+   ---------------------------------------------------------------- */
+@media (max-width: 600px) {
+  /* Header stacks brand + tagline vertically on small screens */
+  .header-inner {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .brand-tagline {
+    margin-left: calc(1.2rem + var(--space-2));  /* re-align under icon */
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-bar {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+
+  .stat-card {
+    padding: var(--space-2) var(--space-2);
+    flex-direction: column;   /* number on top, label below on very small screens */
+    gap: 2px;
+  }
+
+  .card {
+    padding: var(--space-3);
+  }
+
+  .assignment-card {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .card-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .filter-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Toolbar stacks vertically on small screens */
+  .list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+}
